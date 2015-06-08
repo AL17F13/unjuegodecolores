@@ -1,6 +1,9 @@
 // JavaScript Document
 $(document).ready(function(e) {
 document.addEventListener("deviceready",function(){
+	var basedatos=window.sqlitePlugin. openDatabase({name: "coloresBD.db",createFromLocation:1});
+	
+	
 	audio=window.plugins.LowLatencyAudio;
 	audio.preloadFX ('B1','audio/C.mp3',function() {},
 	function(msg){alert("error "+msg);});
@@ -10,7 +13,22 @@ document.addEventListener("deviceready",function(){
 	function(msg){alert("error "+msg);});
 	audio.preloadFX ('B4','audio/F.mp3',function() {},
 	function(msg){alert("error "+msg);});
-	
+	cargarnombrejugador();
+	function cargarnombrejugador()
+	{
+		
+		basedatos.transaction(function(ejecutador){
+			var sql="SELET NombreUsuario FROM Usuario";
+			ejecutar.executesql(sql,undefined,function(ejecutar,resultado){
+			var datosjugador=resultado.row.item(0);
+			$('#jugador').text (datosjugador.NombreUsuario);
+			
+			
+			
+			});
+		
+		});
+	}
 $('#btnjugar').on ('tap',function(){
 
 	var pantalla=$.mobile.getScreenHeight();
@@ -23,6 +41,7 @@ $('#btnjugar').on ('tap',function(){
 	//alert ('contenido ' + contenido);
 	var alto=(pantalla-encabezado-pie)/2;
 	$('.cuadro').height(alto);
+	
 	
 	
 	
