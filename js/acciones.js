@@ -3,6 +3,23 @@ $(document).ready(function(e) {
 document.addEventListener("deviceready",function(){
 	var basedatos=window.sqlitePlugin. openDatabase({name: "coloresBD.db",createFromLocation:1});
 	
+	$('#btnconfigurar').on('tap',function(){
+		$('#txtnombre').val($('#jugador').text() );
+		
+	});
+	$('#btnguardar').on ('tap',function (){
+		
+		var nuevonombre = $('txtnombre').val();
+		basedatos.transaction (function(consulta){
+			consulta.executeSql("UPDATE Usuario SET NombreUsuario WHERE ClaveUsuario='1';",
+			[nuevonombre]);
+			
+		});
+		cargarnombrejugador();
+		
+	});
+	
+	
 	
 	audio=window.plugins.LowLatencyAudio;
 	audio.preloadFX ('B1','audio/C.mp3',function() {},
